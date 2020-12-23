@@ -1,0 +1,178 @@
+databaseChangeLog:  
+  - property:
+      dbms: postgresql
+      name: uuid_function
+      value: uid.uuid_generate_v4()
+  - property:
+      dbms: oracle
+      name: uuid_function
+      value: sys_guid()
+  - property:
+      dbms: mysql
+      name: uuid_function
+      value: uuid()
+  - property:
+      dbms: mssql
+      name: uuid_function
+      value: NEWID()
+  - property:
+      dbms: h2
+      name: uuid_function
+      value: RANDOM_UUID()
+  - preConditions:  
+    - runningAs:  
+        username: cookbook_user  
+  - changeSet:  
+      id: 1
+      author: bchurchill  
+      changes:  
+        - createTable:  
+            tableName: recipe  
+            columns:  
+              - column:  
+                  name: id  
+                  type: varchar(36)
+                  constraints:  
+                    primaryKey: true  
+                    nullable: false  
+              - column:  
+                  name: label  
+                  type: varchar(255)
+                  constraints:  
+                    nullable: false  
+              - column:  
+                  name: short_description  
+                  type: varchar(200)
+                  constraints:  
+                    nullable: false  
+              - column:  
+                  name: description  
+                  type: varchar(8000)
+                  constraints:  
+                    nullable: true  
+              - column:  
+                  name: instructions  
+                  type: varchar(8000)
+                  constraints:  
+                    nullable: true 
+              - column:  
+                  name: source  
+                  type: varchar(255)
+                  constraints:  
+                    nullable: true 
+              - column:  
+                  name: serve_count  
+                  type: bigint
+                  constraints:  
+                    nullable: true 
+  - changeSet:  
+      id: 2
+      author: bchurchill  
+      changes:  
+        - createTable:  
+            tableName: ingredient  
+            columns:  
+              - column:  
+                  name: id  
+                  type: varchar(36)
+                  constraints:  
+                    primaryKey: true  
+                    nullable: false 
+              - column:  
+                  name: label  
+                  type: varchar(64)
+                  constraints:  
+                    nullable: false 
+              - column:  
+                  name: quantity  
+                  type: double
+                  constraints:  
+                    nullable:  true 
+              - column:  
+                  name: units  
+                  type: varchar(64)
+                  constraints:  
+                    nullable: true 
+              - column:  
+                  name: optional  
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:  
+                    nullable: false
+              - column:  
+                  name: recipe_id  
+                  type: varchar(36)
+                  constraints:  
+                    nullable: false
+                    foreignKeyName: recipe_fk01
+                    references: recipe(id)
+  - changeSet:  
+      id: 3
+      author: bchurchill  
+      changes:  
+        - createTable:  
+            tableName: tag  
+            columns:  
+              - column:  
+                  name: id  
+                  type: varchar(36)
+                  constraints:  
+                    primaryKey: true  
+                    nullable: false 
+              - column:  
+                  name: label  
+                  type: varchar(64)
+                  constraints:  
+                    nullable: false
+  - changeSet:  
+      id: 4
+      author: bchurchill  
+      changes:  
+        - createTable:  
+            tableName: recipe_tag  
+            columns:  
+              - column:  
+                  name: id  
+                  type: varchar(36)
+                  constraints:  
+                    primaryKey: true  
+                    nullable: false 
+              - column:  
+                  name: recipe_id  
+                  type: varchar(36)
+                  constraints:  
+                    nullable: false
+                    foreignKeyName: recipe_fk02
+                    references: recipe(id)
+              - column:  
+                  name: tag_id  
+                  type: varchar(36)
+                  constraints:  
+                    nullable: false
+                    foreignKeyName: tag_fk01
+                    references: tag(id)
+  - changeSet:  
+      id: 5
+      author: bchurchill  
+      changes:  
+        - addUniqueConstraint:  
+            tableName: tag
+            columnNames: label
+  - changeSet:  
+      id: 6
+      author: bchurchill
+      dbms: '!mysql'
+      changes:  
+        - addDefaultValue:
+            tableName: recipe_tag
+            columnName: id
+            defaultValueComputed: ${uuid_function}
+  - changeSet:  
+      id: 7
+      author: bchurchill
+      dbms: mysql
+      changes:  
+        - sql: 
+            sql: CREATE TRIGGER recipe_tag_gen_id BEFORE INSERT ON recipe_tag FOR EACH ROW SET new.id = uuid()
+            comment: MySQL does not allow default values to be functions. Liquibase also does not support creating triggers with MySQL without a .sql file.
+        
