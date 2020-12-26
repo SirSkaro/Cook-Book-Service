@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import skaro.coffey.cookbook.recipe.Recipe;
 
@@ -17,7 +18,8 @@ import skaro.coffey.cookbook.recipe.Recipe;
 @Table
 public class Ingredient {
 	public static final String RECIPE_MAPPED_BY_VALUE = "recipe";
-
+	public static final String NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX = "^[0-9]+[.]?[0-9]*([/][0-9]+[.]?[0-9]*)*$";
+	
 	@Id
 	@Column
 	@NotEmpty
@@ -26,9 +28,11 @@ public class Ingredient {
 	@NotEmpty
 	private String label;
 	@Column
-	private Double quantityMin;
+	@Pattern(regexp = NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX)
+	private String quantityMin;
 	@Column
-	private Double quantityMax;
+	@Pattern(regexp = NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX)
+	private String quantityMax;
 	@Column
 	private String units;
 	@Column
@@ -55,16 +59,16 @@ public class Ingredient {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public Double getQuantityMin() {
+	public String getQuantityMin() {
 		return quantityMin;
 	}
-	public void setQuantityMin(Double quantityMin) {
+	public void setQuantityMin(String quantityMin) {
 		this.quantityMin = quantityMin;
 	}
-	public Double getQuantityMax() {
+	public String getQuantityMax() {
 		return quantityMax;
 	}
-	public void setQuantityMax(Double quantityMax) {
+	public void setQuantityMax(String quantityMax) {
 		this.quantityMax = quantityMax;
 	}
 	public String getUnits() {
