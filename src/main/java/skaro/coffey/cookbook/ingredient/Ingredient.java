@@ -26,7 +26,9 @@ public class Ingredient {
 	@NotEmpty
 	private String label;
 	@Column
-	private Double quantity;
+	private Double quantityMin;
+	@Column
+	private Double quantityMax;
 	@Column
 	private String units;
 	@Column
@@ -53,11 +55,17 @@ public class Ingredient {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public Double getQuantity() {
-		return quantity;
+	public Double getQuantityMin() {
+		return quantityMin;
 	}
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
+	public void setQuantityMin(Double quantityMin) {
+		this.quantityMin = quantityMin;
+	}
+	public Double getQuantityMax() {
+		return quantityMax;
+	}
+	public void setQuantityMax(Double quantityMax) {
+		this.quantityMax = quantityMax;
 	}
 	public String getUnits() {
 		return units;

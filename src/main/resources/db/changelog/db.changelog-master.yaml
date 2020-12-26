@@ -175,4 +175,21 @@ databaseChangeLog:
         - sql: 
             sql: CREATE TRIGGER recipe_tag_gen_id BEFORE INSERT ON recipe_tag FOR EACH ROW SET new.id = uuid()
             comment: MySQL does not allow default values to be functions. Liquibase also does not support creating triggers with MySQL without a .sql file.
-        
+  - changeSet:  
+      id: 8
+      author: bchurchill
+      comment: changing ingredient.quantity to a range with max and min values
+      changes:  
+        - renameColumn:
+            tableName: ingredient
+            oldColumnName: quantity
+            newColumnName: quantity_min
+            columnDataType: double
+        - addColumn:
+            tableName: ingredient
+            columns:
+              - column:  
+                  name: quantity_max
+                  type: double
+                  constraints:  
+                    nullable:  true 
