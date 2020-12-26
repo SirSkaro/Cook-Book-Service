@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import skaro.coffey.cookbook.recipe.Recipe;
 
@@ -18,7 +17,6 @@ import skaro.coffey.cookbook.recipe.Recipe;
 @Table
 public class Ingredient {
 	public static final String RECIPE_MAPPED_BY_VALUE = "recipe";
-	public static final String NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX = "^[0-9]+[.]?[0-9]*([/][0-9]+[.]?[0-9]*)*$";
 	
 	@Id
 	@Column
@@ -28,10 +26,8 @@ public class Ingredient {
 	@NotEmpty
 	private String label;
 	@Column
-	@Pattern(regexp = NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX)
 	private String quantityMin;
 	@Column
-	@Pattern(regexp = NUMERIC_OR_DECIMAL_OR_FRACTION_REGEX)
 	private String quantityMax;
 	@Column
 	private String units;
