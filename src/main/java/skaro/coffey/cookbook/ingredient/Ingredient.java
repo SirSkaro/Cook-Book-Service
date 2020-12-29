@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import skaro.coffey.cookbook.recipe.Recipe;
 
@@ -34,6 +35,9 @@ public class Ingredient {
 	@Column
 	@NotNull
 	private Boolean optional;
+	@Column
+	@Positive
+	private Integer sortOrder;
 	@ManyToOne
 	@JoinColumn(name="recipe_id")
 	private Recipe recipe;
@@ -78,6 +82,12 @@ public class Ingredient {
 	}
 	public void setOptional(Boolean optional) {
 		this.optional = optional;
+	}
+	public Integer getSortOrder() {
+		return sortOrder;
+	}
+	public void setSortOrder(Integer sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 	public Recipe getRecipe() {
 		return recipe;
