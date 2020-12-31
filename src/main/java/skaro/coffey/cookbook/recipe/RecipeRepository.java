@@ -18,8 +18,10 @@ import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 
 @Repository
-@RepositoryRestResource
+@RepositoryRestResource(path = RecipeRepository.PATH)
 public interface RecipeRepository extends PagingAndSortingRepository<Recipe, String>, QuerydslPredicateExecutor<Recipe>, QuerydslBinderCustomizer<QRecipe> {
+	public static final String PATH = "recipes";
+	
 	@Override
 	default public void customize(QuerydslBindings bindings, QRecipe root) {
 		bindings.bind(String.class).first((StringPath path, String value) -> {
