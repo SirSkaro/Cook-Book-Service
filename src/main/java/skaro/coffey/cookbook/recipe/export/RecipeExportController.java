@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.itextpdf.text.DocumentException;
+
 import skaro.coffey.cookbook.recipe.Recipe;
 import skaro.coffey.cookbook.recipe.RecipeRepository;
 
@@ -42,7 +44,7 @@ public class RecipeExportController {
 		try {
 			RecipeExport export = exportService.exportRecipe(recipe);
 			return ResponseEntity.ok(toResource(export));
-		} catch(IOException e) {
+		} catch(IOException | DocumentException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
