@@ -3,6 +3,9 @@ pipeline {
     options {
         disableConcurrentBuilds()
     }
+    tools {
+    	maven 'M3'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -12,7 +15,9 @@ pipeline {
         stage('Package') {
             steps {
                 configFileProvider([configFile(fileId: '6ad22f3f-4a44-48e4-abd1-10e1d6a84074', targetLocation: 'src/main/resources/application.properties')]) {}
-                sh label: '', script: 'mvn clean package -DskipTests'
+                withMaven {
+                	sh label: '', script: 'mvn clean package -DskipTests'
+               	}
             }
         }
         stage('Deploy') {
