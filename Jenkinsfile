@@ -3,9 +3,6 @@ pipeline {
     options {
         disableConcurrentBuilds()
     }
-    tools {
-    	maven 'M3'
-    }
     stages {
         stage('Checkout') {
             steps {
