@@ -12,9 +12,7 @@ pipeline {
         stage('Package') {
             steps {
                 configFileProvider([configFile(fileId: '6ad22f3f-4a44-48e4-abd1-10e1d6a84074', targetLocation: 'src/main/resources/application.properties')]) {}
-                withMaven {
-                	sh label: '', script: './mvnw clean package -DskipTests'
-               	}
+                sh label: '', script: './mvnw clean package -DskipTests'
             }
         }
         stage('Deploy') {
