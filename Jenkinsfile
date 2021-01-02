@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'docker build -t cookbook-service .'
                 sh 'docker stop cookbook-service || true && docker rm cookbook-service || true'
-                sh 'docker run -d -p 8080:80 --network casa-net --name cookbook-service --restart always'
+                sh 'docker run -d -p 9000:80 --network casa-net --name cookbook-service --restart always'
             }
         }
     }
