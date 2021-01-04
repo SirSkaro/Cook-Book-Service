@@ -50,6 +50,6 @@ ENV JAVA_HOME=/opt/java-minimal
 ENV PATH="$PATH:$JAVA_HOME/bin"
 
 COPY --from=packager "$JAVA_HOME" "$JAVA_HOME"
-COPY build/libs/application.jar app.jar
+COPY target/*.jar app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]
