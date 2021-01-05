@@ -32,8 +32,6 @@ public class Recipe {
 	@NotEmpty
 	private String shortDescription;
 	@Column
-	private String description;
-	@Column
 	private String instructions;
 	@Column
 	private String source;
@@ -68,12 +66,6 @@ public class Recipe {
 	}
 	public void setLabel(String label) {
 		this.label = label;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	public String getShortDescription() {
 		return shortDescription;
