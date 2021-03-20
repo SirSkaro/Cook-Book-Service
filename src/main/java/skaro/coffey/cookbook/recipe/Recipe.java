@@ -49,7 +49,7 @@ public class Recipe {
 		joinColumns = @JoinColumn(name = "recipe_id"),
 		inverseJoinColumns = @JoinColumn(name = "tag_id")
 	)
-	Set<Tag> tags;
+	private Set<Tag> tags;
 	
 	public Recipe() {
 		this.id = UUID.randomUUID().toString();

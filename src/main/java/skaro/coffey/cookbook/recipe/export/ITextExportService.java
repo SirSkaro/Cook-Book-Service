@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -33,9 +34,11 @@ public class ITextExportService implements RecipeExportService {
 		
 		PdfWriter.getInstance(document, byteStream);
 		document.open();
+		document.addTitle(recipe.getLabel() + " printout");
 		addTitleHeader(document, recipe);
 		addIngredients(document, recipe);
 		addInstructions(document, recipe);
+		
 		
 		document.close();
 		return createExport(recipe, byteStream);
@@ -62,6 +65,10 @@ public class ITextExportService implements RecipeExportService {
 	}
 	
 	private void addInstructions(Document document, Recipe recipe) throws DocumentException {
+		if(!StringUtils.hasLength(recipe.getInstructions())) {
+			return;
+		}
+		
 		Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, BaseColor.BLACK);
 		
 		java.util.List<Paragraph> paragraphs = Stream.of(recipe.getInstructions().split("/n"))
