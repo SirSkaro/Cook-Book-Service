@@ -197,3 +197,21 @@ databaseChangeLog:
             oldColumnName: sortOrder
             newColumnName: sort_order
             tableName: ingredient
+  - changeSet:  
+      id: 10
+      author: bchurchill  
+      changes:  
+        - createTable:  
+            tableName: user  
+            columns:  
+              - column:  
+                  name: username
+                  type: varchar(256)
+                  constraints:  
+                    primaryKey: true  
+                    nullable: false 
+              - column:  
+                  name: password  
+                  type: varchar(2048)
+                  constraints:  
+                    nullable: false
