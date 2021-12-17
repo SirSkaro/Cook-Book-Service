@@ -18,13 +18,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import skaro.coffey.cookbook.security.AuthenticationFacade;
 
+@Component(TokenSecurityFilter.TOKEN_SECURITY_FILTER_BEAN)
 public class TokenSecurityFilter extends OncePerRequestFilter {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	public static final String TOKEN_SECURITY_FILTER_BEAN = "tokenSecurityFilter";
 	
 	private TokenService tokenService;
 	private UserDetailsService userDetailsService;

@@ -3,10 +3,13 @@ package skaro.coffey.cookbook.security.token;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+@Service
 public class JsonWebTokenService implements TokenService {
 
 	private TokenConfigurationProperties tokenConfig;
@@ -46,7 +49,8 @@ public class JsonWebTokenService implements TokenService {
 	} 
 	
 	private Date createNewTokenExpiration() {
-		return new Date(System.currentTimeMillis() + tokenConfig.getValidityTime() * 1000);
+		long expirationInMinutes = tokenConfig.getValidityTimeInMinutes() * 1000 * 60;
+		return new Date(System.currentTimeMillis() + expirationInMinutes);
 	}
 	
 	private String createNewToken(Date expiration, String username) {

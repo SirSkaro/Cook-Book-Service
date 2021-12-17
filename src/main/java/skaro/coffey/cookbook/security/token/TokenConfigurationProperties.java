@@ -8,7 +8,7 @@ public class TokenConfigurationProperties {
 	@NotBlank
 	private String secretKey;
 	@Positive
-	private long validityTime;
+	private long validityTimeInMinutes;
 
 	public String getSecretKey() {
 		return secretKey;
@@ -16,10 +16,10 @@ public class TokenConfigurationProperties {
 	public void setSecretKey(String secretKey) {
 		this.secretKey = secretKey;
 	}
-	public long getValidityTime() {
-		return validityTime;
+	public long getValidityTimeInMinutes() {
+		return validityTimeInMinutes;
 	}
-	public void setValidityTime(long validityTime) {
-		this.validityTime = validityTime;
+	public void setValidityTimeInMinutes(long validityTimeInMinutes) {
+		this.validityTimeInMinutes = validityTimeInMinutes;
 	}
 }

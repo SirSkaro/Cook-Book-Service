@@ -41,4 +41,5 @@ public interface RecipeRepository extends PagingAndSortingRepository<Recipe, Str
 			}
 		});
 	}
+	
 }
