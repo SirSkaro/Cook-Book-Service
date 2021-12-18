@@ -61,7 +61,6 @@ public class LoginController {
 	private void storeTokenInCookie(TokenSession token, HttpServletResponse response) {
 		Cookie sessionCookie = new Cookie("cookbook-session", token.getToken());
 		sessionCookie.setMaxAge(getCookieAge(token));
-		sessionCookie.setSecure(true);
 		response.addCookie(sessionCookie);
 	}
 	
