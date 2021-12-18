@@ -36,7 +36,7 @@ public class JsonWebTokenService implements TokenService {
 				.setSigningKey(tokenConfig.getSecretKey())
 				.parseClaimsJws(token)
 				.getBody();
-		return !claims.getExpiration().before(new Date()); 
+		return claims.getExpiration().before(new Date()); 
 	}
 	
 	@Override

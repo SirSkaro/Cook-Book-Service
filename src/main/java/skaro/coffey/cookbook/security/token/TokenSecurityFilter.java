@@ -46,8 +46,8 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 				.filter(not(tokenService::isTokenExpired))
 				.map(this::getUserDetails)
 				.ifPresent(userDetails -> authenticate(userDetails, request));
-		} catch(UsernameNotFoundException e) {
-			LOG.info("User unkown user tried to authenticate with a token");
+		} catch(Exception e) {
+			LOG.info("Unkown user tried to authenticate with a token");
 		}
 		
 		filterChain.doFilter(request, response);
