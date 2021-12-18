@@ -43,6 +43,8 @@ public class CookbookSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
 			.authorizeRequests()
 				.antMatchers(LOGIN_ENDPOINT).permitAll()
 				.antMatchers(HttpMethod.GET).anonymous()
+				.antMatchers(HttpMethod.GET).authenticated()
+				.antMatchers(HttpMethod.GET).permitAll()
 				.anyRequest().authenticated()
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

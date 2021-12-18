@@ -1,5 +1,7 @@
 package skaro.coffey.cookbook.security;
 
+import static skaro.coffey.cookbook.security.AuthorityService.NAMED_USER_AUTHORITY;
+
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +31,7 @@ public class CookbookUserDetialsService implements UserDetailsService {
 	}
 	
 	private List<GrantedAuthority> createNamedUserGrantedAuthorities() {
-		return List.of(new SimpleGrantedAuthority("all"));
+		return List.of(new SimpleGrantedAuthority(NAMED_USER_AUTHORITY));
 	}
 
 }
