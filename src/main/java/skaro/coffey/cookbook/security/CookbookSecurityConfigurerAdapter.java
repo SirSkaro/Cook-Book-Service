@@ -39,15 +39,20 @@ public class CookbookSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable()
-			.authorizeRequests()
-				.antMatchers(LOGIN_ENDPOINT).permitAll()
+		httpSecurity.cors().disable()
+	        .authorizeRequests()
+	        	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+	        	.antMatchers(LOGIN_ENDPOINT).permitAll()
 				.antMatchers(HttpMethod.GET).anonymous()
 				.antMatchers(HttpMethod.GET).authenticated()
 				.antMatchers(HttpMethod.GET).permitAll()
 				.anyRequest().authenticated()
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	        .and()
+	        	.httpBasic()
+	        .and()
+	        	.csrf().disable().
+	        	sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
+		
 		httpSecurity.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
