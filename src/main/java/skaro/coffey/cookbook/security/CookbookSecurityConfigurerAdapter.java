@@ -50,8 +50,8 @@ public class CookbookSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
 	        .and()
 	        	.httpBasic()
 	        .and()
-	        	.csrf().disable().
-	        	sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);;
+	        	.csrf().disable()
+	        	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		httpSecurity.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
