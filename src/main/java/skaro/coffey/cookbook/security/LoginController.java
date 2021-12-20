@@ -1,8 +1,5 @@
 package skaro.coffey.cookbook.security;
 
-import java.util.Date;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -41,7 +38,6 @@ public class LoginController {
 		try {
 			authenticate(user);
 			TokenSession token = createToken(user);
-			storeTokenInCookie(token, response);
 			return ResponseEntity.ok(token);
 		} catch (DisabledException | BadCredentialsException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -58,14 +54,4 @@ public class LoginController {
 		return tokenService.generateToken(userDetails.getUsername());
 	}
 	
-	private void storeTokenInCookie(TokenSession token, HttpServletResponse response) {
-		Cookie sessionCookie = new Cookie("cookbook-session", token.getToken());
-		sessionCookie.setMaxAge(getCookieAge(token));
-		response.addCookie(sessionCookie);
-	}
-	
-	private int getCookieAge(TokenSession token) {
-		return (int)((token.getExpiration().getTime() - new Date().getTime()) / 1000);
-	}
-
 }
