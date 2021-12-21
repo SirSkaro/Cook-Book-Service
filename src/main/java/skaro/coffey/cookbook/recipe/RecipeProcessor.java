@@ -14,7 +14,7 @@ import skaro.coffey.cookbook.security.AuthorityService;
 @Component
 public class RecipeProcessor implements RepresentationModelProcessor<EntityModel<Recipe>> {
 	public static final String EXPORT_LINK = "export";
-	public static final String EDIT_LINK = "edit";
+	public static final String UPDATE_LINK = "update";
 	public static final String DELETE_LINK = "delete";
 	
 	private AuthorityService authService;
@@ -26,7 +26,7 @@ public class RecipeProcessor implements RepresentationModelProcessor<EntityModel
 	@Override
 	public EntityModel<Recipe> process(EntityModel<Recipe> model) {
 		addExportLink(model);
-		addAffordances(model);
+		addPermissionLinks(model);
 		return model;
 	}
 
@@ -36,14 +36,14 @@ public class RecipeProcessor implements RepresentationModelProcessor<EntityModel
 		model.add(exportLink);
 	}
 	
-	private void addAffordances(EntityModel<Recipe> model) {
+	private void addPermissionLinks(EntityModel<Recipe> model) {
 		if(!authService.isNamedUser()) {
 			return;
 		}
 		Link selfLink = model.getRequiredLink("self");
-		Link editLink = Link.of(selfLink.getHref(), EDIT_LINK);
+		Link updateLink = Link.of(selfLink.getHref(), UPDATE_LINK);
 		Link deleteLink = Link.of(selfLink.getHref(), DELETE_LINK);
 		
-		model.add(editLink, deleteLink);
+		model.add(updateLink, deleteLink);
 	}
 }
