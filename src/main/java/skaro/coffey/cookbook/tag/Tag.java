@@ -31,7 +31,7 @@ public class Tag {
 		joinColumns = @JoinColumn(name = "tag_id"),
 		inverseJoinColumns = @JoinColumn(name = "recipe_id")
 	)
-	Set<Recipe> recipes;
+	private Set<Recipe> recipes;
 	
 	public Tag() {
 		this.id = UUID.randomUUID().toString();
@@ -54,6 +54,10 @@ public class Tag {
 	}
 	public void setRecipes(Set<Recipe> recipes) {
 		this.recipes = recipes;
+	}
+	
+	public int getRecipeCount() {
+		return recipes.size();
 	}
 	
 }
